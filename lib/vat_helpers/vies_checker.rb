@@ -1,11 +1,11 @@
 require 'rubygems'
 require 'soap/wsdlDriver'
 
-module VatValidator
+module VatHelpers
   class ViesChecker
-  
+
     WSDL = 'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl'
-  
+
     class << self
      def check(country_code, vat_number)
        begin

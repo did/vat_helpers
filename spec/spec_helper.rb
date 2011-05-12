@@ -1,27 +1,37 @@
-require 'rubygems'
-require 'spec'
-require 'active_model'
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 
-require File.dirname(__FILE__) + '/../lib/vat_validator.rb'
- 
+require 'rubygems'
+require 'bundler'
+Bundler.setup
+Bundler.require(:test)
+
+require 'mocha'
+require 'rspec'
+require 'vat_helpers'
+
+Rspec.configure do |config|
+  config.mock_with :mocha
+end
+
 # Utils models =================================================================
 
 class BaseTestModel
   include ActiveModel::Serialization
   include ActiveModel::Validations
-  
+
   attr_accessor :attributes
-  
+
   def initialize(attributes = {})
     @attributes = attributes
   end
-  
+
   def read_attribute_for_validation(key)
     @attributes[key]
   end
 end
 
-class Invoice < BaseTestModel  
+class Invoice < BaseTestModel
   validates :vat_number, :vat => true
 end
 
@@ -31,12 +41,12 @@ end
 
 class CountryCheckedInvoice < BaseTestModel
   validates :vat_number, :vat => { :country_method => :country_code }
-  
+
   # Fake attribute accessor
   def country
     @attributes[:country]
   end
-  
+
   # Logic to return the country code
   def country_code
     case country.downcase
@@ -48,6 +58,6 @@ class CountryCheckedInvoice < BaseTestModel
   end
 end
 
-class ViesCheckedInvoice < BaseTestModel  
+class ViesCheckedInvoice < BaseTestModel
   validates :vat_number, :vat => {:vies => true}
 end
