@@ -1,6 +1,6 @@
 = Description
 
-Use this plugin to validate VAT numbers for european countries as well as get the tax rate depending on the country of the buyer.
+Use this plugin to validate VAT numbers for european countries as well as to get the tax rate depending on the country of the buyer.
 
 = Basic Usage
 
@@ -60,27 +60,27 @@ Note: by default, the value of the vta_applied_for option is set to 'FR'
 
 Let's review the different cases for a seller in France:
 
-  1. the seller in outside Europe
+1. the seller is outside Europe
 
   VatHelpers::Rate.get('US') # returns 0.0
 
-  2. the buyer is in France
+2. the buyer is in France
 
   VatHelpers::Rate.get('FR') # returns 19.6
 
-  3. the buyer is in Europe without a vat number
+3. the buyer is in Europe without a vat number
 
   VatHelpers::Rate.get('BE') # returns 19.6
 
-  4. the buyer is in Europe with a vat number
+4. the buyer is in Europe with a vat number
 
   VatHelpers::Rate.get('BE', { :vat_number => 'a_valid_vat_number' }) # returns 0.0
 
-  5. the buyer is in Martinique, Guadeloupe or la Réunion
+5. the buyer is in Martinique, Guadeloupe or la Réunion
 
   VatHelpers::Rate.get('MQ') # returns 8.5
 
-  6. the buyer is in French Guyana
+6. the buyer is in French Guyana
 
   VatHelpers::Rate.get('GF') # returns 0.0
 
@@ -89,7 +89,7 @@ Let's review the different cases for a seller in France:
 
 In your project's Gemfile :
 
-gem 'vat_helpers'
+gem 'vat_helpers', :git => 'git://github.com/did/vat_helpers.git'
 
 = Tests
 
